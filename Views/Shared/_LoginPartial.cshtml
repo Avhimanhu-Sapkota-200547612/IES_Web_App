@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using IES_WebAuth_Project.Areas.Identity.Data
+
+@inject SignInManager<WebUser> SignInManager
+@inject UserManager<WebUser> UserManager
+
+<style>
+    /* Custom styles */
+
+    #register, #login{
+        font-family: Arial, sans-serif;
+        color: #800000; /* Maroon font color */
+    }
+
+    #register:hover, #login:hover {
+        font-family: Arial, sans-serif;
+        color: #000000; /* Maroon font color */
+    }
+    .navbar {
+        background-color: #ffffff; /* White background color */
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin-right: 10px;
+    }
+
+    .nav-link {
+        color: #800000; /* Maroon font color */
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s;
+    }
+
+        .nav-link:hover {
+            color: #800000 /*  font color on hover */
+        }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-link-btn {
+        border: none;
+        background-color: transparent;
+        color: #800000; /* Maroon font color */
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .nav-link-btn:hover {
+            color: #000000; /*  font color on hover */
+        }
+</style>
+
+<div class="navbar">
+    <ul class="navbar-nav">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li class="nav-item">
+                <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" style="color:#800000" title="">Hey, @UserManager.GetUserName(User)!</a>
+            </li>
+            <li class="nav-item">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link-btn">Log Out</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+        }
+    </ul>
+</div>
+
+

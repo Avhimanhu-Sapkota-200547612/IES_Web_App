@@ -1,0 +1,46 @@
+﻿
+
+@model IES_WebAuth_Project.Models.Contact
+
+@{
+    ViewData["Title"] = "Contact Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Contact Details Title -->
+<h1 style="color:#800000;">Contact Details</h1>
+
+<!-- Contact Information -->
+<div>
+    <hr />
+
+    <!-- Display Contact details in a definition list -->
+    <dl class="row">
+        <dt class="col-sm-2" style="color:#800000;">First Name</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FirstName)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">Last Name</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.LastName)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">Email</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">Address</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Address)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">City</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.City)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">State</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.State)</dd>
+
+        <dt class="col-sm-2" style="color:#800000;">Zip</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Zip)</dd>
+    </dl>
+</div>
+
+<!-- Navigation Links -->
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary" style="background-color:#800000; border-color:#800000;">Edit</a> 
+    <a asp-action="Index" class="btn btn-outline-light" style="color:#800000;">Back to List</a>
+</div>

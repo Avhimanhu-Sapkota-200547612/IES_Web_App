@@ -1,0 +1,126 @@
+﻿
+
+@model IEnumerable<IES_WebAuth_Project.Models.Contact>
+@using Microsoft.AspNetCore.Identity
+@using IES_WebAuth_Project.Areas.Identity.Data
+
+@inject SignInManager<WebUser> SignInManager
+@inject UserManager<WebUser> UserManager
+
+@{
+    ViewData["Title"] = "The Contact Database";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Container for the Contact List -->
+<div class="container p-3">
+
+    <!-- Row for Contact List Title and Create New Button -->
+    <div class="row pt-4 pb-2">
+        <!-- Contact List Title -->
+        <div class="col-6">
+            <h2 class="" style="color:#800000;"> List of Contacts</h2>
+        </div>
+        <!-- Create New Button (visible for Admin role only) -->
+        <div class="col-6 text-end">
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Contact" asp-action="Create" class="btn btn-outline-light" style="color:#800000;">
+                    <i class="bi bi-plus-square"></i> &nbsp;
+                    Create a New Contact
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- Partial view for displaying notifications -->
+    <partial name="Notification" />
+
+    <!-- Table to display the contact list -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Zip)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+   
+
+        <tbody>
+            <!-- Iterate through each contact item and display the details in the table rows -->
+            @foreach (var item in Model)
+            {
+                @if (User.IsInRole("User") && item.Status != "Approved")
+                {
+                    continue; // Skip the contact row if the user is in "User" role but the contact is not approved
+                }
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zip)
+                    </td>
+                    <td>
+                        <!-- Display action links (Details, Edit, Delete, Change Status) based on user role -->
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" style="color:#800000;">Edit</a><br />
+                            <a asp-action="Delete" asp-route-id="@item.Id" style="color:#800000;">Delete</a><br />
+                            <a asp-action="Details" asp-route-id="@item.Id" style="color:#800000;">Details</a>
+                        }
+
+                        <!-- Display Change Status link for Manager role -->
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" style="color:#800000;">Change Status</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

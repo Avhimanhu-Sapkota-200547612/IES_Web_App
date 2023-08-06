@@ -1,0 +1,128 @@
+﻿
+@model IES_WebAuth_Project.Models.Contact
+
+@{
+    ViewData["Title"] = "Create Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Container for the Create Contact form -->
+<div class="container p-3">
+
+    <!-- Row for Create Contact Title -->
+    <div class="row pt-4 pb-2">
+        <!-- Create Contact Title -->
+        <div class="col-6">
+            <h2 class="" style="color:#800000;">Create Contact</h2>
+        </div>
+    </div>
+
+    <!-- Partial view for displaying notifications -->
+    <partial name="Notification" />
+
+    <!-- Row for Create Contact Form -->
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Display error message (if any) -->
+            @if (TempData["error"] != null)
+            {
+                <div class="alert p-2 alert-dismissible alert-danger">
+                    <strong>Oops!</strong>  <a hclass="alert-link" style="color:#800000;">@TempData["error"]</a>.
+                </div>
+            }
+
+            <!-- Create Contact Form -->
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Row for First Name and Last Name fields -->
+                <div class="row pb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label" style="color:#800000;">First Name</label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label" style="color:#800000;">Last Name</label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row for Email field -->
+                <div class="row pb-3">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label" style="color:#800000;">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Row for Address and City fields -->
+                <div class="row pb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Address" class="control-label" style="color:#800000;">Address</label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label" style="color:#800000;">City</label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row for State, Zip, and Status fields -->
+                <div class="row pb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="State" class="control-label" style="color:#800000;">State</label>
+                            <input asp-for="State" class="form-control" />
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Zip" class="control-label" style="color:#800000;">Zip</label>
+                            <input asp-for="Zip" class="form-control" />
+                            <span asp-validation-for="Zip" class="text-danger"></span>
+                            <input asp-for="UserId" value="@ViewBag.userId" readonly hidden class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label" style="color:#800000;">Status</label>
+                            <select asp-for="Status" class="form-select">
+                                <option disabled selected style="color:#800000;">Select Status</option>
+                                <option value="Pending" style="color:#800000;">Pending</option>
+                                <option class="alert-success" value="Approved" style="color:#800000;">Approved</option>
+                                <option class="alert-danger" value="Rejected" style="color:#800000;">Rejected</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <!-- Submit and Back to List buttons -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="background-color:#800000; border-color:#800000;">Create</button>
+                    <a asp-action="Index" class="btn btn-outline-light" style="color:#800000;">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

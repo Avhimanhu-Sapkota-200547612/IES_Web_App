@@ -1,0 +1,56 @@
+﻿
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<!-- Container for the login form -->
+<div class="row">
+    <div class="col-md-4 m-auto py-3">
+        <section>
+            <!-- Login form -->
+            <form id="account" method="post">
+                <!-- Heading for the login form -->
+                <h2 class="text-center" style="color:#800000">Local Account - Log In</h2>
+                <hr />
+
+                <!-- Display validation summary if there are model errors -->
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                <!-- Email input field with floating label -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email" class="form-label" style="color:#800000">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <!-- Password input field with floating label -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label" style="color:#800000">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <!-- Remember Me checkbox -->
+                <div class="checkbox mb-3">
+                    <label asp-for="Input.RememberMe" class="form-label" style="color:#800000">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+
+                <!-- Submit button -->
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary" style="background-color:#800000; border-color:#800000">Log In</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+<!-- Partial view for validation scripts -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

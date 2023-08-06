@@ -1,0 +1,211 @@
+﻿
+@model IES_WebAuth_Project.Models.Contact
+@using Microsoft.AspNetCore.Identity
+@using IES_WebAuth_Project.Areas.Identity.Data
+
+@inject SignInManager<WebUser> SignInManager
+@inject UserManager<WebUser> UserManager
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main container -->
+<div class="container p-3">
+
+    <!-- Page header -->
+    <div class="row pt-4 pb-2">
+        <div class="col-6">
+            <h2 style="color:#800000">Edit Contact</h2>
+        </div>
+    </div>
+
+    <!-- Display any notification messages -->
+    <partial name="Notification" />
+
+    <!-- Edit form for Admin role -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Check if there's any error message in TempData -->
+            @if (TempData["error"] != null)
+            {
+                <div class="alert p-2 alert-dismissible alert-danger">
+                    <strong>Oops!</strong> <a class="alert-link">@TempData["error"]</a>.
+                </div>
+            }
+
+            <!-- Display edit form for users in Admin role -->
+            @if (User.IsInRole("Admin"))
+            {
+                <form asp-action="Edit">
+                    <!-- Display model validation errors if any -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row pb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="control-label">First Name</label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="LastName" class="control-label">Last Name</label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Address" class="control-label">Address</label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="City" class="control-label">City</label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="State" class="control-label">State</label>
+                                <input asp-for="State" class="form-control" />
+                                <span asp-validation-for="State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Zip" class="control-label">Zip</label>
+                                <input asp-for="Zip" class="form-control" />
+                                <span asp-validation-for="Zip" class="text-danger"></span>
+                                <input asp-for="UserId" readonly hidden class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label">Status</label>
+                                <select asp-for="Status" class="form-select">
+                                    <option disabled selected>Select Status</option>
+                                    <option class="alert-success" value="Approved">Approved</option>
+                                    <option class="alert-danger" value="Rejected">Rejected</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="background-color: #800000; border-color: #800000;">Edit</button>
+                        <a asp-action="Index" class="btn btn-outline-light" style="color: #800000;">Back to List</a>
+                    </div>
+                </form>
+            }
+
+            <!-- Display edit form for users in Manager role -->
+            @if (User.IsInRole("Manager"))
+            {
+                <form asp-action="Edit">
+                    <!-- Display model validation errors if any -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row pb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="control-label">First Name</label>
+                                <input asp-for="FirstName" readonly class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="LastName" class="control-label">Last Name</label>
+                                <input asp-for="LastName" readonly class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <input asp-for="Email" readonly class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Address" class="control-label">Address</label>
+                                <input asp-for="Address" readonly class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="City" class="control-label">City</label>
+                                <input asp-for="City" readonly class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="State" class="control-label">State</label>
+                                <input asp-for="State" readonly class="form-control" />
+                                <span asp-validation-for="State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Zip" class="control-label">Zip</label>
+                                <input asp-for="Zip" readonly class="form-control" />
+                                <span asp-validation-for="Zip" class="text-danger"></span>
+                                <input asp-for="UserId" readonly hidden class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label">Status</label>
+                                <select asp-for="Status" class="form-select">
+                                    <option disabled selected>Select Status</option>
+                                    <option class="alert-success" value="Approved">Approved</option>
+                                    <option class="alert-danger" value="Rejected">Rejected</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="background-color: #800000; border-color: #800000;">Change Status</button>
+                        <a asp-action="Index" class="btn btn-outline-light" style="color: #800000;">Back to List</a>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
